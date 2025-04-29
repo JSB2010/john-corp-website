@@ -2,38 +2,46 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 function Home() {
-  // Add scroll reveal effect
-  useEffect(() => {
-    const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
 
-    const revealOnScroll = () => {
+  useEffect(() => {
+    // Function to handle scroll animations
+    const handleScroll = () => {
       const windowHeight = window.innerHeight;
       const elementVisible = 150;
 
-      for (const element of revealElements) {
-        const elementTop = element.getBoundingClientRect().top;
+      // Get all elements with reveal classes
+      const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
 
+      revealElements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementBottom = element.getBoundingClientRect().bottom;
+
+        // Add 'active' class when scrolling down and element comes into view
         if (elementTop < windowHeight - elementVisible) {
           element.classList.add('active');
         }
-      }
+        // Remove 'active' class when element is out of view (for scrolling up animation)
+        else if (elementTop > windowHeight || elementBottom < 0) {
+          element.classList.remove('active');
+        }
+      });
     };
 
-    window.addEventListener('scroll', revealOnScroll);
-    revealOnScroll(); // Initial check
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
 
-    return () => window.removeEventListener('scroll', revealOnScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <div className="bg-white">
       {/* Hero Section - Apple Style */}
-      <div className="hero hero-gradient min-h-[90vh] flex items-center relative overflow-hidden">
+      <div className="hero hero-gradient min-h-[90vh] flex items-center relative overflow-hidden mt-0">
         <div className="absolute inset-0 bg-gradient-to-b from-black/90 to-black/70 z-0"></div>
         <div className="hero-content-wrapper container py-32 px-6 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="hero-title animate-fadeIn">JOHN CORP</h1>
-            <p className="hero-subtitle animate-fadeIn delay-200">
+            <h1 className="hero-title animate-fadeIn text-white text-6xl">JOHN CORP</h1>
+            <p className="hero-subtitle animate-fadeIn delay-200 text-white text-xl font-medium">
               Innovating with our revolutionary adhesive technology since 1634. Creating bonds that last.
             </p>
             <div className="flex flex-wrap justify-center gap-6 mt-10 animate-fadeIn delay-400">
@@ -46,7 +54,6 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black to-transparent"></div>
 
         {/* Animated scroll indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
@@ -57,9 +64,9 @@ function Home() {
       </div>
 
       {/* Features Section - Apple Style */}
-      <div className="section-xl">
+      <div className="section-xl pt-16">
         <div className="container px-6">
-          <div className="text-center mb-20 reveal-scale">
+          <div className="text-center mb-12 reveal-scale">
             <h2 className="apple-section-title">What We Do</h2>
             <p className="apple-section-subtitle">
               At John Corp, we combine cutting-edge adhesive technology with creative storytelling to deliver exceptional products and experiences.
@@ -112,7 +119,7 @@ function Home() {
       {/* Testimonials - Apple Style */}
       <div className="section-xl bg-gray-50">
         <div className="container px-6">
-          <div className="text-center mb-20 reveal-scale">
+          <div className="text-center mb-12 reveal-scale">
             <h2 className="apple-section-title">What Our Customers Say</h2>
             <p className="apple-section-subtitle">
               Don't just take our word for it. Here's what our customers have to say about Jizz Tech.
@@ -164,7 +171,7 @@ function Home() {
       </div>
 
       {/* CTA Section - Apple Style */}
-      <div className="section-xl bg-black text-white py-32">
+      <div className="section-xl bg-black text-white py-24">
         <div className="container px-6">
           <div className="apple-cta mx-auto max-w-4xl reveal-scale">
             <h2 className="apple-cta-title text-4xl">Ready to Experience the Strength of Jizz Tech?</h2>

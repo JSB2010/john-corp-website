@@ -28,7 +28,7 @@ export function Header() {
   }, [location]);
 
   return (
-    <header className={`nav fixed w-full transition-all duration-300 ${scrolled ? 'bg-black/90' : 'bg-black/80'}`}>
+    <header className={`nav fixed w-full transition-all duration-300 ${scrolled ? 'bg-black/90' : 'bg-black/80'} z-50`}>
       <div className="container mx-auto px-6">
         <div className="nav-container py-4">
           <Link to="/" className="nav-logo">

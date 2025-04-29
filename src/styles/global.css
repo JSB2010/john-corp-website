@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Modern Apple-inspired styles */
+.hero {
+  @apply relative h-[70vh] flex items-center justify-center bg-gradient-to-b from-gray-900 to-gray-800 text-white overflow-hidden;
+}
+
+.hero-content {
+  @apply text-center z-10 px-4;
+}
+
+.hero-title {
+  @apply text-5xl md:text-6xl font-bold mb-6 animate-fade-in;
+  letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+  @apply text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto;
+  letter-spacing: -0.01em;
+}
+
+.section {
+  @apply py-24 px-6;
+}
+
+.section-light {
+  @apply bg-gray-50 py-24 px-6;
+}
+
+.container {
+  @apply max-w-7xl mx-auto;
+}
+
+.card {
+  @apply bg-white rounded-2xl p-8 transition-shadow duration-300 hover:shadow-xl;
+}
+
+.btn {
+  @apply px-8 py-3 rounded-full font-medium transition-all duration-300 text-sm;
+}
+
+.btn-primary {
+  @apply bg-gray-900 text-white hover:bg-gray-800 hover:shadow-lg;
+}
+
+.btn-secondary {
+  @apply bg-gray-100 text-gray-900 hover:bg-gray-200;
+}
+
+.form-group {
+  @apply mb-6;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700 mb-2;
+}
+
+.form-control {
+  @apply w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-200;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Modern Grid */
+.grid-cols-auto-fit {
+  @apply grid gap-8;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* Typography */
+.heading-xl {
+  @apply text-4xl md:text-5xl font-bold tracking-tight;
+  letter-spacing: -0.02em;
+}
+
+.heading-lg {
+  @apply text-3xl md:text-4xl font-bold tracking-tight;
+  letter-spacing: -0.02em;
+}
+
+.heading-md {
+  @apply text-2xl md:text-3xl font-bold tracking-tight;
+  letter-spacing: -0.01em;
+}
+
+/* Navigation */
+.nav-link {
+  @apply text-gray-600 hover:text-gray-900 transition-colors duration-200;
+}
+
+/* Modern Lists */
+.feature-list {
+  @apply space-y-6;
+}
+
+.feature-item {
+  @apply flex items-start space-x-4;
+}
+
+.feature-icon {
+  @apply flex-shrink-0 w-6 h-6 text-gray-900;
+}
+
+/* Modern Inputs */
+.search-input {
+  @apply w-full px-4 py-2 rounded-full border border-gray-200 focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-200;
+}

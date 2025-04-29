@@ -1,0 +1,25 @@
+/* ...existing code... */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.product {
+    border: 1px solid #ccc;
+    padding: 15px;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.product h2 {
+    margin: 0 0 10px;
+}
+
+.product p {
+    margin: 0;
+    color: #555;
+}
+/* ...existing code... */

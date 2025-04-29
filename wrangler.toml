@@ -1,0 +1,6 @@
+name = "john-corp-website"
+compatibility_date = "2025-04-29"
+main = "./dist/worker.js"
+
+[site]
+bucket = "./dist"

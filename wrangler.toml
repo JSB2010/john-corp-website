@@ -4,3 +4,7 @@ main = "./dist/worker.js"
 
 [site]
 bucket = "./dist"
+
+[build]
+command = "npm run build"
+pages_build_output_dir = "dist"

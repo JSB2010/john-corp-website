@@ -137,10 +137,10 @@ function About() {
             <div style={{ backgroundColor: '#e5e7eb', borderRadius: '50%', height: '192px', width: '192px', margin: '0 auto 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <p className="text-gray-500">Photo</p>
             </div>
-            <h3 className="mb-2" style={{ fontSize: '1.25rem' }}>Sarah Chen</h3>
-            <p className="text-blue-700 mb-3">Creative Director</p>
+            <h3 className="mb-2" style={{ fontSize: '1.25rem' }}>Charles Cuneo</h3>
+            <p className="text-blue-700 mb-3">R&D Director</p>
             <p className="text-gray-700">
-              Visionary leader of our filmmaking division with extensive industry experience.
+              Visionary leader of our R&D division with extensive industry experience as well as being a revolutionary board member. 
             </p>
           </div>
 
@@ -148,10 +148,10 @@ function About() {
             <div style={{ backgroundColor: '#e5e7eb', borderRadius: '50%', height: '192px', width: '192px', margin: '0 auto 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <p className="text-gray-500">Photo</p>
             </div>
-            <h3 className="mb-2" style={{ fontSize: '1.25rem' }}>Michael Rodriguez</h3>
-            <p className="text-blue-700 mb-3">Chief Operations Officer</p>
+            <h3 className="mb-2" style={{ fontSize: '1.25rem' }}>Matthew Hues</h3>
+            <p className="text-blue-700 mb-3">Head Janator and Simp of the centruy</p>
             <p className="text-gray-700">
-              Oversees global operations and supply chain management across all divisions.
+              Oversees all janitorial operations and ensures a clean and safe work environment for all employees. Also is a massive hater on many of our prevous successful endevors.
             </p>
           </div>
 
@@ -159,10 +159,10 @@ function About() {
             <div style={{ backgroundColor: '#e5e7eb', borderRadius: '50%', height: '192px', width: '192px', margin: '0 auto 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <p className="text-gray-500">Photo</p>
             </div>
-            <h3 className="mb-2" style={{ fontSize: '1.25rem' }}>Emily Thompson</h3>
-            <p className="text-blue-700 mb-3">Chief Marketing Officer</p>
+            <h3 className="mb-2" style={{ fontSize: '1.25rem' }}>Declan Garner</h3>
+            <p className="text-blue-700 mb-3">Dead Weight</p>
             <p className="text-gray-700">
-              Leads our global marketing strategies and brand development initiatives.
+              He is never here I don't know why he is on the website. He is a massive person.
             </p>
           </div>
         </div>

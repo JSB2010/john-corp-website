@@ -95,7 +95,7 @@ function Products() {
 
       {/* Product Lineup */}
       <div className="container py-16 px-4">
-        <h2 className="text-center mb-12">Jizz Tech Product Lineup</h2>
+        <h2 className="text-center mb-12">Jizz Tech Products </h2>
         
         <div className="grid md:grid-cols-3">
           <div style={{ border: '1px solid #e5e7eb', borderRadius: '0.5rem', overflow: 'hidden', marginBottom: '1rem' }}>
@@ -103,9 +103,9 @@ function Products() {
               <p className="text-gray-500">Product Image</p>
             </div>
             <div className="p-4">
-              <h3 className="mb-2" style={{ fontSize: '1.25rem' }}>Jizz Tech Original</h3>
+              <h3 className="mb-2" style={{ fontSize: '1.25rem' }}>Jizz Tech Original Formula </h3>
               <p className="text-gray-700 mb-4">
-                Our flagship adhesive product, perfect for general-purpose applications.
+                Our orginal adhesive product, perfect for general-purpose applications.
               </p>
               <p className="text-blue-700" style={{ fontWeight: 'bold' }}>$19.99</p>
             </div>
@@ -116,7 +116,7 @@ function Products() {
               <p className="text-gray-500">Product Image</p>
             </div>
             <div className="p-4">
-              <h3 className="mb-2" style={{ fontSize: '1.25rem' }}>Jizz Tech Pro</h3>
+              <h3 className="mb-2" style={{ fontSize: '1.25rem' }}>Jizz Tech Advanced Formula </h3>
               <p className="text-gray-700 mb-4">
                 Industrial-grade adhesive for professional and heavy-duty applications.
               </p>

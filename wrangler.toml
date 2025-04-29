@@ -3,8 +3,8 @@ compatibility_date = "2025-04-29"
 main = "./dist/worker.js"
 
 [build]
-command = "npm run build"
-pages_build_output_dir = "dist"
+command = "npm install && npm run build"
+output_dir = "dist"
 
 [site]
 bucket = "./dist"

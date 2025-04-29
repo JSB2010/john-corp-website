@@ -2,9 +2,10 @@ name = "john-corp-website"
 compatibility_date = "2025-04-29"
 main = "./dist/worker.js"
 
+[build]
+command = "npm install --no-package-lock && npm run build"
+dist = "dist"
+pages_build_output_dir = "dist"
+
 [site]
 bucket = "./dist"
-
-[build]
-command = "npm run build"
-pages_build_output_dir = "dist"

@@ -1,6 +1,52 @@
-import React from 'react'
+import React from 'react';
+import { useCart } from '../context/CartContext';
 
-function Products() {
+const STOCK_LIMITS = {
+  1: 10, // Original Formula stock
+  2: 5,  // Advanced Formula stock
+  3: 8   // Quick Formula stock
+};
+
+const productData = [
+  {
+    id: 1,
+    name: 'Jizz Tech Original Formula',
+    description: 'Our original adhesive product, perfect for general-purpose applications.',
+    price: 19.99,
+    image: 'product-image-placeholder'
+  },
+  {
+    id: 2,
+    name: 'Jizz Tech Advanced Formula',
+    description: 'Industrial-grade adhesive for professional and heavy-duty applications.',
+    price: 29.99,
+    image: 'product-image-placeholder'
+  },
+  {
+    id: 3,
+    name: 'Jizz Tech Quick',
+    description: 'Ultra-fast setting formula for time-sensitive projects.',
+    price: 24.99,
+    image: 'product-image-placeholder'
+  }
+];
+
+function Products({ showNotification }) {
+  const { addToCart, cart } = useCart();
+
+  const handleAddToCart = (product) => {
+    const currentQuantity = cart.find(item => item.id === product.id)?.quantity || 0;
+    const stockLimit = STOCK_LIMITS[product.id];
+
+    if (currentQuantity >= stockLimit) {
+      showNotification(`Sorry, only ${stockLimit} units available`, 'error');
+      return;
+    }
+
+    addToCart(product);
+    showNotification(`${product.name} added to cart!`, 'success');
+  };
+
   return (
     <div className="bg-white">
       {/* Hero Section */}
@@ -95,51 +141,38 @@ function Products() {
 
       {/* Product Lineup */}
       <div className="container py-16 px-4">
-        <h2 className="text-center mb-12">Jizz Tech Products </h2>
+        <h2 className="text-center mb-12">Jizz Tech Products</h2>
         
-        <div className="grid md:grid-cols-3">
-          <div style={{ border: '1px solid #e5e7eb', borderRadius: '0.5rem', overflow: 'hidden', marginBottom: '1rem' }}>
-            <div className="bg-gray-100" style={{ height: '192px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <p className="text-gray-500">Product Image</p>
+        <div className="grid md:grid-cols-3 gap-6">
+          {productData.map((product) => (
+            <div key={product.id} className="border border-gray-200 rounded-lg overflow-hidden">
+              <div className="bg-gray-100 h-48 flex items-center justify-center">
+                <p className="text-gray-500">Product Image</p>
+              </div>
+              <div className="p-4">
+                <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
+                <p className="text-gray-700 mb-4">{product.description}</p>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="text-blue-700 font-bold">${product.price}</p>
+                    <p className="text-sm text-gray-500">
+                      Stock: {STOCK_LIMITS[product.id]} units
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => handleAddToCart(product)}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="p-4">
-              <h3 className="mb-2" style={{ fontSize: '1.25rem' }}>Jizz Tech Original Formula </h3>
-              <p className="text-gray-700 mb-4">
-                Our orginal adhesive product, perfect for general-purpose applications.
-              </p>
-              <p className="text-blue-700" style={{ fontWeight: 'bold' }}>$19.99</p>
-            </div>
-          </div>
-          
-          <div style={{ border: '1px solid #e5e7eb', borderRadius: '0.5rem', overflow: 'hidden', marginBottom: '1rem' }}>
-            <div className="bg-gray-100" style={{ height: '192px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <p className="text-gray-500">Product Image</p>
-            </div>
-            <div className="p-4">
-              <h3 className="mb-2" style={{ fontSize: '1.25rem' }}>Jizz Tech Advanced Formula </h3>
-              <p className="text-gray-700 mb-4">
-                Industrial-grade adhesive for professional and heavy-duty applications.
-              </p>
-              <p className="text-blue-700" style={{ fontWeight: 'bold' }}>$29.99</p>
-            </div>
-          </div>
-          
-          <div style={{ border: '1px solid #e5e7eb', borderRadius: '0.5rem', overflow: 'hidden' }}>
-            <div className="bg-gray-100" style={{ height: '192px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <p className="text-gray-500">Product Image</p>
-            </div>
-            <div className="p-4">
-              <h3 className="mb-2" style={{ fontSize: '1.25rem' }}>Jizz Tech Quick</h3>
-              <p className="text-gray-700 mb-4">
-                Ultra-fast setting formula for time-sensitive projects.
-              </p>
-              <p className="text-blue-700" style={{ fontWeight: 'bold' }}>$24.99</p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Products
+export default Products;

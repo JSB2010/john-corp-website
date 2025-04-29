@@ -1,6 +1,11 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { useState } from 'react'
 import './App.css'
 import './apple-styles.css'
+import { CartProvider, useCart } from './context/CartContext'
+import Cart from './components/Cart'
+import MiniCart from './components/MiniCart'
+import Notification from './components/Notification'
 
 // Pages
 import Home from './pages/Home'
@@ -11,7 +16,18 @@ import Contact from './pages/Contact'
 import Payments from './pages/Payments'
 import Founder from './pages/Founder'
 
-function App() {
+function AppContent() {
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isMiniCartOpen, setIsMiniCartOpen] = useState(false);
+  const [notification, setNotification] = useState(null);
+  const { cart } = useCart();
+
+  const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
+
+  const showNotification = (message, type = 'success') => {
+    setNotification({ message, type });
+  };
+
   return (
     <Router>
       <div className="flex flex-col" style={{ minHeight: '100vh' }}>
@@ -28,12 +44,26 @@ function App() {
               <Link to="/founder" className="nav-link">Founder</Link>
               <Link to="/filmmaking" className="nav-link">Films</Link>
               <Link to="/contact" className="nav-link">Contact</Link>
-              <Link to="/payments" className="nav-link flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                <span>(3)</span>
-              </Link>
+              <div 
+                className="relative"
+                onMouseEnter={() => setIsMiniCartOpen(true)}
+                onMouseLeave={() => setIsMiniCartOpen(false)}
+              >
+                <button 
+                  onClick={() => setIsCartOpen(true)} 
+                  className="nav-link flex items-center gap-1 bg-transparent border-0 relative"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                  {cartItemCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                      {cartItemCount}
+                    </span>
+                  )}
+                </button>
+                {isMiniCartOpen && <MiniCart onClose={() => setIsMiniCartOpen(false)} />}
+              </div>
             </div>
           </div>
         </nav>
@@ -42,14 +72,26 @@ function App() {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
+            <Route path="/products" element={<Products showNotification={showNotification} />} />
             <Route path="/filmmaking" element={<Filmmaking />} />
             <Route path="/about" element={<About />} />
             <Route path="/founder" element={<Founder />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/payments" element={<Payments />} />
+            <Route path="/payments" element={<Payments showNotification={showNotification} />} />
           </Routes>
         </main>
+
+        {/* Cart Sidebar */}
+        {isCartOpen && <Cart onClose={() => setIsCartOpen(false)} />}
+
+        {/* Notification */}
+        {notification && (
+          <Notification
+            message={notification.message}
+            type={notification.type}
+            onClose={() => setNotification(null)}
+          />
+        )}
 
         {/* Apple-style Footer */}
         <footer className="footer">
@@ -134,7 +176,15 @@ function App() {
         </footer>
       </div>
     </Router>
-  )
+  );
 }
 
-export default App
+function App() {
+  return (
+    <CartProvider>
+      <AppContent />
+    </CartProvider>
+  );
+}
+
+export default App;

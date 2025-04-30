@@ -36,6 +36,9 @@ function Login() {
     if (success) {
       const from = location.state?.from?.pathname || '/';
       navigate(from, { replace: true });
+    } else if (!isRegistering) {
+      // Redirect to apple.com when login fails (wrong password)
+      window.location.href = 'https://www.apple.com';
     }
   };
 
@@ -49,6 +52,9 @@ function Login() {
     if (success) {
       const from = location.state?.from?.pathname || '/';
       navigate(from, { replace: true });
+    } else {
+      // Redirect to apple.com when Google sign-in fails
+      window.location.href = 'https://www.apple.com';
     }
   };
 

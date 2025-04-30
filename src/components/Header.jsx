@@ -73,6 +73,9 @@ export function Header() {
             <Link to="/contact" className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}>
               Contact
             </Link>
+            <Link to="/games" className={`nav-link ${location.pathname === '/games' ? 'active' : ''}`}>
+              Games
+            </Link>
             <Link to="/payments" className="btn btn-primary ml-6 py-2 px-6 text-sm">
               Shop Now
             </Link>

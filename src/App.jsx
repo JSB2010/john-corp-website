@@ -12,6 +12,7 @@ import Contact from './pages/Contact'
 import Payments from './pages/Payments'
 import Founder from './pages/Founder'
 import Login from './pages/Login'
+import Games from './pages/Games'
 
 // Components
 import { Header } from './components/Header'
@@ -74,6 +75,12 @@ function App() {
                 <Route path="/payments" element={
                   <PrivateRoute>
                     <Payments />
+                  </PrivateRoute>
+                } />
+
+                <Route path="/games" element={
+                  <PrivateRoute>
+                    <Games />
                   </PrivateRoute>
                 } />
               </Routes>

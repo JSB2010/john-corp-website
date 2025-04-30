@@ -1,10 +1,22 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { currentUser, logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/login');
+    } catch (error) {
+      console.error('Failed to log out', error);
+    }
+  };
 
   // Handle scroll effect for transparent to solid header
   useEffect(() => {
@@ -64,6 +76,19 @@ export function Header() {
             <Link to="/payments" className="btn btn-primary ml-6 py-2 px-6 text-sm">
               Shop Now
             </Link>
+
+            {currentUser ? (
+              <button
+                onClick={handleLogout}
+                className="btn btn-outline text-white border-white ml-4 py-2 px-6 text-sm"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link to="/login" className="btn btn-outline text-white border-white ml-4 py-2 px-6 text-sm">
+                Login
+              </Link>
+            )}
           </nav>
         </div>
       </div>

@@ -11,32 +11,78 @@ import About from './pages/About'
 import Contact from './pages/Contact'
 import Payments from './pages/Payments'
 import Founder from './pages/Founder'
+import Login from './pages/Login'
 
 // Components
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
+import PrivateRoute from './components/PrivateRoute'
+
+// Context
+import { AuthProvider } from './context/AuthContext'
+import { CartProvider } from './context/CartContext'
 
 function App() {
   return (
     <Router>
-      <div className="flex flex-col min-h-screen">
-        <Header />
+      <AuthProvider>
+        <CartProvider>
+          <div className="flex flex-col min-h-screen">
+            <Header />
 
-        {/* Main Content */}
-        <main className="flex-grow pt-16">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/filmmaking" element={<Filmmaking />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/founder" element={<Founder />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/payments" element={<Payments />} />
-          </Routes>
-        </main>
+            {/* Main Content */}
+            <main className="flex-grow pt-16">
+              <Routes>
+                <Route path="/login" element={<Login />} />
 
-        <Footer />
-      </div>
+                <Route path="/" element={
+                  <PrivateRoute>
+                    <Home />
+                  </PrivateRoute>
+                } />
+
+                <Route path="/products" element={
+                  <PrivateRoute>
+                    <Products />
+                  </PrivateRoute>
+                } />
+
+                <Route path="/filmmaking" element={
+                  <PrivateRoute>
+                    <Filmmaking />
+                  </PrivateRoute>
+                } />
+
+                <Route path="/about" element={
+                  <PrivateRoute>
+                    <About />
+                  </PrivateRoute>
+                } />
+
+                <Route path="/founder" element={
+                  <PrivateRoute>
+                    <Founder />
+                  </PrivateRoute>
+                } />
+
+                <Route path="/contact" element={
+                  <PrivateRoute>
+                    <Contact />
+                  </PrivateRoute>
+                } />
+
+                <Route path="/payments" element={
+                  <PrivateRoute>
+                    <Payments />
+                  </PrivateRoute>
+                } />
+              </Routes>
+            </main>
+
+            <Footer />
+          </div>
+        </CartProvider>
+      </AuthProvider>
     </Router>
   )
 }

@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { useEffect } from 'react'
 import './styles/global.css'
 import './apple-styles.css'
-import './enhanced-apple-styles.css'
 import './animations.css'
 
 // Pages
@@ -21,7 +20,6 @@ import { Header } from './components/Header'
 import { Footer } from './components/Footer'
 import PrivateRoute from './components/PrivateRoute'
 import ScrollToTop from './components/ScrollToTop'
-import AnimationWrapper from './components/AnimationWrapper'
 
 // Context
 import { AuthProvider } from './context/AuthContext'
@@ -64,7 +62,7 @@ function App() {
             <Header />
 
             {/* Main Content */}
-            <main className="flex-grow pt-20">
+            <main className="flex-grow pt-16">
               <Routes>
                 <Route path="/login" element={<Login />} />
 

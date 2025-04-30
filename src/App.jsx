@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react'
 import './styles/global.css'
 import './apple-styles.css'
+import './enhanced-apple-styles.css'
 import './animations.css'
 
 // Pages
@@ -18,21 +20,51 @@ import Games from './pages/Games'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
 import PrivateRoute from './components/PrivateRoute'
+import ScrollToTop from './components/ScrollToTop'
+import AnimationWrapper from './components/AnimationWrapper'
 
 // Context
 import { AuthProvider } from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
 
 function App() {
+  // Initialize animations when component mounts
+  useEffect(() => {
+    // Add event listener for scroll animations
+    const handleScroll = () => {
+      const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+
+      reveals.forEach(element => {
+        const windowHeight = window.innerHeight;
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+
+        if (elementTop < windowHeight - elementVisible) {
+          element.classList.add('active');
+        } else {
+          element.classList.remove('active');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check on initial load
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <Router>
       <AuthProvider>
         <CartProvider>
+          <ScrollToTop />
           <div className="flex flex-col min-h-screen">
             <Header />
 
             {/* Main Content */}
-            <main className="flex-grow pt-16">
+            <main className="flex-grow pt-20">
               <Routes>
                 <Route path="/login" element={<Login />} />
 

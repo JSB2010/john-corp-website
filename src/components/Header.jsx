@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [scrollDirection, setScrollDirection] = useState('none');
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const headerRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
@@ -18,95 +21,148 @@ export function Header() {
     }
   };
 
-  // Handle scroll effect for transparent to solid header
+  // Handle scroll effects for header
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
+      const currentScrollY = window.scrollY;
+
+      // Determine scroll direction
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        setScrollDirection('down');
+      } else if (currentScrollY < lastScrollY) {
+        setScrollDirection('up');
+      }
+
+      // Set scrolled state for background opacity
+      if (currentScrollY > 50) {
         setScrolled(true);
       } else {
         setScrolled(false);
       }
+
+      setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [lastScrollY]);
 
+  // Disable body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
 
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
 
   // Close mobile menu when route changes
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location]);
 
+  // Handle escape key to close mobile menu
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, []);
+
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-black/90 backdrop-blur-md' : 'bg-black/70'}`}>
+    <header
+      ref={headerRef}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? 'bg-black/90 backdrop-blur-md shadow-md' : 'bg-black/70'
+      } ${
+        scrollDirection === 'down' && !isMenuOpen ? '-translate-y-full' : 'translate-y-0'
+      }`}
+    >
       <div className="container mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <span className="text-white font-semibold text-xl">JOHN CORP</span>
+          <Link to="/" className="flex items-center z-50 relative">
+            <span className="text-white font-semibold text-xl animate-fade-in">JOHN CORP</span>
           </Link>
 
           {/* Mobile menu button */}
           <button
-            className="md:hidden text-white p-2"
+            className="md:hidden text-white p-2 z-50 relative focus:outline-none"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
+            aria-expanded={isMenuOpen}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-              />
-            </svg>
+            <div className="w-6 h-6 relative">
+              <span
+                className={`absolute h-0.5 w-6 bg-white transform transition-all duration-300 ease-in-out ${
+                  isMenuOpen ? 'rotate-45 top-3' : 'rotate-0 top-1'
+                }`}
+              ></span>
+              <span
+                className={`absolute h-0.5 bg-white transform transition-all duration-300 ease-in-out ${
+                  isMenuOpen ? 'w-0 opacity-0 left-3' : 'w-6 opacity-100 left-0'
+                } top-3`}
+              ></span>
+              <span
+                className={`absolute h-0.5 w-6 bg-white transform transition-all duration-300 ease-in-out ${
+                  isMenuOpen ? '-rotate-45 top-3' : 'rotate-0 top-5'
+                }`}
+              ></span>
+            </div>
           </button>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
-            <Link to="/products" className={`text-white hover:text-gray-300 transition-colors ${location.pathname === '/products' ? 'font-medium' : ''}`}>
-              Products
-            </Link>
-            <Link to="/about" className={`text-white hover:text-gray-300 transition-colors ${location.pathname === '/about' ? 'font-medium' : ''}`}>
-              About
-            </Link>
-            <Link to="/founder" className={`text-white hover:text-gray-300 transition-colors ${location.pathname === '/founder' ? 'font-medium' : ''}`}>
-              Founder
-            </Link>
-            <Link to="/filmmaking" className={`text-white hover:text-gray-300 transition-colors ${location.pathname === '/filmmaking' ? 'font-medium' : ''}`}>
-              Films
-            </Link>
-            <Link to="/contact" className={`text-white hover:text-gray-300 transition-colors ${location.pathname === '/contact' ? 'font-medium' : ''}`}>
-              Contact
-            </Link>
-            <Link to="/games" className={`text-white hover:text-gray-300 transition-colors ${location.pathname === '/games' ? 'font-medium' : ''}`}>
-              Games
-            </Link>
-            <Link to="/payments" className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full transition-colors">
+            {[
+              { to: '/products', label: 'Products' },
+              { to: '/about', label: 'About' },
+              { to: '/founder', label: 'Founder' },
+              { to: '/filmmaking', label: 'Films' },
+              { to: '/contact', label: 'Contact' },
+              { to: '/games', label: 'Games' }
+            ].map((item, index) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={`text-white hover:text-gray-300 transition-all duration-300 relative overflow-hidden group ${
+                  location.pathname === item.to ? 'font-medium' : ''
+                }`}
+              >
+                <span className="relative z-10 block">{item.label}</span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+            ))}
+
+            <Link
+              to="/payments"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2.5 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+            >
               Shop Now
             </Link>
 
             {currentUser ? (
               <button
                 onClick={handleLogout}
-                className="border border-white text-white hover:bg-white hover:text-black px-4 py-2 rounded-full transition-colors"
+                className="border border-white text-white hover:bg-white hover:text-black px-5 py-2.5 rounded-full transition-all duration-300 transform hover:scale-105"
               >
                 Logout
               </button>
             ) : (
               <Link
                 to="/login"
-                className="border border-white text-white hover:bg-white hover:text-black px-4 py-2 rounded-full transition-colors"
+                className="border border-white text-white hover:bg-white hover:text-black px-5 py-2.5 rounded-full transition-all duration-300 transform hover:scale-105"
               >
                 Login
               </Link>
@@ -115,57 +171,44 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      <div className={`md:hidden fixed inset-0 bg-black z-40 transition-transform duration-300 transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="flex flex-col h-full pt-20 px-6 pb-6">
-          <nav className="flex flex-col space-y-6 text-center">
-            <Link
-              to="/products"
-              className={`text-white text-xl ${location.pathname === '/products' ? 'font-medium' : ''}`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Products
-            </Link>
-            <Link
-              to="/about"
-              className={`text-white text-xl ${location.pathname === '/about' ? 'font-medium' : ''}`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              About
-            </Link>
-            <Link
-              to="/founder"
-              className={`text-white text-xl ${location.pathname === '/founder' ? 'font-medium' : ''}`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Founder
-            </Link>
-            <Link
-              to="/filmmaking"
-              className={`text-white text-xl ${location.pathname === '/filmmaking' ? 'font-medium' : ''}`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Films
-            </Link>
-            <Link
-              to="/contact"
-              className={`text-white text-xl ${location.pathname === '/contact' ? 'font-medium' : ''}`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Contact
-            </Link>
-            <Link
-              to="/games"
-              className={`text-white text-xl ${location.pathname === '/games' ? 'font-medium' : ''}`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Games
-            </Link>
+      {/* Mobile Navigation - Full Screen Overlay */}
+      <div
+        className={`md:hidden fixed inset-0 bg-black/95 backdrop-blur-lg z-40 transition-all duration-500 ${
+          isMenuOpen
+            ? 'opacity-100 pointer-events-auto'
+            : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        <div className="flex flex-col h-full justify-center px-6 pb-6 overflow-auto">
+          <nav className="flex flex-col space-y-8 text-center">
+            {[
+              { to: '/products', label: 'Products' },
+              { to: '/about', label: 'About' },
+              { to: '/founder', label: 'Founder' },
+              { to: '/filmmaking', label: 'Films' },
+              { to: '/contact', label: 'Contact' },
+              { to: '/games', label: 'Games' }
+            ].map((item, index) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={`text-white text-2xl font-light transition-all duration-300 transform ${
+                  isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                } ${location.pathname === item.to ? 'font-normal' : ''}`}
+                style={{ transitionDelay: `${index * 50 + 100}ms` }}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
 
-            <div className="pt-6 flex flex-col space-y-4">
+            <div className="pt-8 flex flex-col space-y-4 items-center">
               <Link
                 to="/payments"
-                className="bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-full transition-colors"
+                className={`bg-blue-500 hover:bg-blue-600 text-white w-full max-w-xs py-3.5 rounded-full transition-all duration-300 transform ${
+                  isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                }`}
+                style={{ transitionDelay: '450ms' }}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Shop Now
@@ -177,14 +220,20 @@ export function Header() {
                     handleLogout();
                     setIsMenuOpen(false);
                   }}
-                  className="border border-white text-white hover:bg-white hover:text-black py-3 rounded-full transition-colors"
+                  className={`border border-white text-white hover:bg-white hover:text-black w-full max-w-xs py-3.5 rounded-full transition-all duration-300 transform ${
+                    isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                  }`}
+                  style={{ transitionDelay: '500ms' }}
                 >
                   Logout
                 </button>
               ) : (
                 <Link
                   to="/login"
-                  className="border border-white text-white hover:bg-white hover:text-black py-3 rounded-full transition-colors"
+                  className={`border border-white text-white hover:bg-white hover:text-black w-full max-w-xs py-3.5 rounded-full transition-all duration-300 transform ${
+                    isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                  }`}
+                  style={{ transitionDelay: '500ms' }}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Login

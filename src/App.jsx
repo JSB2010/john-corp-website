@@ -2,7 +2,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { useEffect } from 'react'
 import './styles/global.css'
 import './apple-styles.css'
-import './animations.css'
+import './styles/modern-apple.css'
+import './styles/animations.css'
+import { initScrollAnimations, initParallaxEffect } from './utils/animationUtils'
 
 // Pages
 import Home from './pages/Home'
@@ -28,28 +30,52 @@ import { CartProvider } from './context/CartContext'
 function App() {
   // Initialize animations when component mounts
   useEffect(() => {
-    // Add event listener for scroll animations
-    const handleScroll = () => {
-      const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+    // Set the title when the component mounts
+    document.title = 'John Corp - Revolutionary Adhesive Technology';
 
-      reveals.forEach(element => {
-        const windowHeight = window.innerHeight;
+    // Function to add active class with delay
+    const addActiveClassWithDelay = (element, delay) => {
+      setTimeout(() => {
+        element.classList.add('active');
+      }, delay);
+    };
+
+    // Initialize scroll animations for existing elements
+    const handleScroll = () => {
+      const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .footer-animate');
+      const windowHeight = window.innerHeight;
+
+      reveals.forEach((element, index) => {
         const elementTop = element.getBoundingClientRect().top;
         const elementVisible = 150;
 
         if (elementTop < windowHeight - elementVisible) {
-          element.classList.add('active');
+          // Add active class with staggered delay
+          addActiveClassWithDelay(element, index * 50);
         } else {
           element.classList.remove('active');
         }
       });
     };
 
-    window.addEventListener('scroll', handleScroll);
+    // Initialize new scroll animations
+    const scrollObserver = initScrollAnimations('.scroll-animate');
+
+    // Initialize parallax effects for elements with parallax class
+    const cleanupParallax = initParallaxEffect('.parallax');
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll(); // Check on initial load
 
+    // Cleanup on unmount
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      if (scrollObserver) {
+        scrollObserver.disconnect();
+      }
+      if (cleanupParallax) {
+        cleanupParallax();
+      }
     };
   }, []);
 

@@ -1,7 +1,42 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const footerRef = useRef(null);
+
+  // Function to add active class with delay
+  const addActiveClassWithDelay = (element, delay) => {
+    setTimeout(() => {
+      element.classList.add('active');
+    }, delay);
+  };
+
+  // Add scroll reveal animation for footer elements
+  useEffect(() => {
+    const handleScrollAnimation = () => {
+      const footerElement = footerRef.current;
+      if (!footerElement) return;
+
+      const footerSections = footerElement.querySelectorAll('.footer-animate');
+      const windowHeight = window.innerHeight;
+
+      footerSections.forEach((section, index) => {
+        const sectionTop = section.getBoundingClientRect().top;
+        if (sectionTop < windowHeight - 100) {
+          // Add active class with staggered delay
+          addActiveClassWithDelay(section, index * 100);
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScrollAnimation);
+    handleScrollAnimation(); // Check on initial load
+
+    return () => {
+      window.removeEventListener('scroll', handleScrollAnimation);
+    };
+  }, []);
 
   // Footer links organized by section
   const footerLinks = [
@@ -84,27 +119,28 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-gray-100 border-t border-gray-200">
+    <footer ref={footerRef} className="bg-gray-100 border-t border-gray-200">
       {/* Main footer content */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
+      <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-8 md:gap-10">
           {/* Company info */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 footer-animate opacity-0 transform translate-y-8 transition-all duration-700">
             <Link to="/" className="inline-block mb-4">
-              <span className="text-black font-bold text-xl">JOHN CORP</span>
+              <span className="text-black font-bold text-xl md:text-2xl">JOHN CORP</span>
             </Link>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-600 mb-6 text-base md:text-lg">
               Innovating with our revolutionary adhesive technology since 1634. Creating bonds that last.
             </p>
             <div className="flex space-x-4">
-              {socialIcons.map((social) => (
+              {socialIcons.map((social, index) => (
                 <a
                   key={social.name}
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors duration-300"
+                  className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center bg-gray-200 text-gray-600 hover:bg-blue-500 hover:text-white transition-all duration-300 transform hover:scale-110 hover:shadow-md"
                   aria-label={social.name}
+                  style={{ transitionDelay: `${index * 50}ms` }}
                 >
                   {social.icon}
                 </a>
@@ -113,15 +149,19 @@ export function Footer() {
           </div>
 
           {/* Footer links */}
-          {footerLinks.map((section) => (
-            <div key={section.title}>
-              <h3 className="font-semibold text-gray-900 mb-4">{section.title}</h3>
+          {footerLinks.map((section, sectionIndex) => (
+            <div
+              key={section.title}
+              className="footer-animate opacity-0 transform translate-y-8 transition-all duration-700"
+              style={{ transitionDelay: `${(sectionIndex + 1) * 100}ms` }}
+            >
+              <h3 className="font-semibold text-gray-900 mb-4 text-lg">{section.title}</h3>
               <ul className="space-y-3">
-                {section.links.map((link) => (
+                {section.links.map((link, linkIndex) => (
                   <li key={link.label}>
                     <Link
                       to={link.to}
-                      className="text-gray-600 hover:text-blue-500 transition-colors duration-300"
+                      className="text-gray-600 hover:text-blue-500 transition-all duration-300 block py-1 transform hover:translate-x-1"
                     >
                       {link.label}
                     </Link>
@@ -133,22 +173,44 @@ export function Footer() {
         </div>
       </div>
 
+      {/* Newsletter Subscription - New Section */}
+      <div className="bg-gray-50 py-10 md:py-12 border-t border-gray-200">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center footer-animate opacity-0 transform translate-y-8 transition-all duration-700">
+            <h3 className="text-xl md:text-2xl font-semibold mb-4">Stay Updated</h3>
+            <p className="text-gray-600 mb-6">Subscribe to our newsletter for the latest product updates and company news.</p>
+            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <input
+                type="email"
+                placeholder="Your email address"
+                className="flex-grow px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-md">
+                Subscribe
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Footer bottom */}
-      <div className="border-t border-gray-200 py-6">
-        <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-600 text-sm mb-4 md:mb-0">
-            © {currentYear} John Corp. All rights reserved.
-          </p>
-          <div className="flex space-x-6">
-            <Link to="/contact" className="text-gray-600 hover:text-blue-500 text-sm transition-colors duration-300">
-              Privacy Policy
-            </Link>
-            <Link to="/contact" className="text-gray-600 hover:text-blue-500 text-sm transition-colors duration-300">
-              Terms of Service
-            </Link>
-            <Link to="/contact" className="text-gray-600 hover:text-blue-500 text-sm transition-colors duration-300">
-              Cookie Policy
-            </Link>
+      <div className="border-t border-gray-200 py-6 md:py-8">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center footer-animate opacity-0 transform translate-y-8 transition-all duration-700">
+            <p className="text-gray-600 text-sm md:text-base mb-4 md:mb-0">
+              © {currentYear} John Corp. All rights reserved.
+            </p>
+            <div className="flex flex-wrap justify-center md:justify-end gap-4 md:gap-6">
+              <Link to="/contact" className="text-gray-600 hover:text-blue-500 text-sm md:text-base transition-all duration-300">
+                Privacy Policy
+              </Link>
+              <Link to="/contact" className="text-gray-600 hover:text-blue-500 text-sm md:text-base transition-all duration-300">
+                Terms of Service
+              </Link>
+              <Link to="/contact" className="text-gray-600 hover:text-blue-500 text-sm md:text-base transition-all duration-300">
+                Cookie Policy
+              </Link>
+            </div>
           </div>
         </div>
       </div>

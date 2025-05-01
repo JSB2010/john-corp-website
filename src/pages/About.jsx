@@ -140,7 +140,7 @@ function About() {
             <h3 className="mb-2" style={{ fontSize: '1.25rem' }}>Charles Cuneo</h3>
             <p className="text-blue-700 mb-3">R&D Director</p>
             <p className="text-gray-700">
-              Visionary leader of our R&D division with extensive industry experience as well as being a revolutionary board member. 
+              Visionary leader of our R&D division with extensive industry experience as well as being a revolutionary board member.
             </p>
           </div>
 
@@ -160,9 +160,20 @@ function About() {
               <p className="text-gray-500">Photo</p>
             </div>
             <h3 className="mb-2" style={{ fontSize: '1.25rem' }}>Declan Garner</h3>
-            <p className="text-blue-700 mb-3">Dead Weight</p>
+            <p className="text-blue-700 mb-3">Creative Director</p>
             <p className="text-gray-700">
-              He is never here I don't know why he is on the website. He is a massive person.
+              Leading our creative vision across all projects with innovative design thinking and artistic excellence.
+            </p>
+          </div>
+
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ backgroundColor: '#e5e7eb', borderRadius: '50%', height: '192px', width: '192px', margin: '0 auto 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <p className="text-gray-500">Photo</p>
+            </div>
+            <h3 className="mb-2" style={{ fontSize: '1.25rem' }}>Connor Speigal</h3>
+            <p className="text-blue-700 mb-3">Director of Filmmaking</p>
+            <p className="text-gray-700">
+              Award-winning filmmaker overseeing all production aspects of our filmmaking division with a passion for visual storytelling.
             </p>
           </div>
         </div>

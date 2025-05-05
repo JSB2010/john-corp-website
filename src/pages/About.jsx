@@ -126,6 +126,12 @@ function About() {
       <div className="container py-12 md:py-16 px-4">
         <h2 className="section-title text-center mb-8 md:mb-12 text-3xl md:text-4xl font-bold tracking-tight">Our Leadership Team</h2>
 
+        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 rounded-r-lg">
+          <p className="text-blue-700 font-medium">
+            <span className="font-bold">Leadership Update:</span> While our founder John Cunningham is on business in Texas, Jonha Wimer is serving as temporary CEO of John Corp.
+          </p>
+        </div>
+
         <div className="team-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
           {/* John Cunningham */}
           <div className="team-card bg-white rounded-xl p-6 transition-all duration-300 hover:shadow-md text-center animate-fadeIn">
@@ -133,9 +139,9 @@ function About() {
               <p className="text-gray-500">Photo</p>
             </div>
             <h3 className="team-member-name mb-2 text-xl md:text-2xl font-semibold">John Cunningham</h3>
-            <p className="team-member-title text-blue-700 mb-3 font-medium">CEO & Chairman</p>
+            <p className="team-member-title text-blue-700 mb-3 font-medium">Founder & Chairman</p>
             <p className="team-member-bio text-gray-700">
-              Founder Of John Corp, continuing the legacy of innovation and excellence.
+              Founder of John Corp, currently on business in Texas. Continuing the legacy of innovation and excellence.
             </p>
           </div>
 
@@ -151,15 +157,15 @@ function About() {
             </p>
           </div>
 
-          {/* Jonah Wimer */}
+          {/* Jonha Wimer */}
           <div className="team-card bg-white rounded-xl p-6 transition-all duration-300 hover:shadow-md text-center animate-fadeIn" style={{animationDelay: '0.2s'}}>
             <div className="team-member-photo bg-gray-200 rounded-full w-36 h-36 md:w-48 md:h-48 mx-auto mb-6 flex items-center justify-center overflow-hidden">
               <p className="text-gray-500">Photo</p>
             </div>
-            <h3 className="team-member-name mb-2 text-xl md:text-2xl font-semibold">Jonah Wimer</h3>
-            <p className="team-member-title text-blue-700 mb-3 font-medium">Head Chemist and Product Lead</p>
+            <h3 className="team-member-name mb-2 text-xl md:text-2xl font-semibold">Jonha Wimer</h3>
+            <p className="team-member-title text-blue-700 mb-3 font-medium">Temporary CEO & Head Chemist</p>
             <p className="team-member-bio text-gray-700">
-              Award-winning specilist leding our R&D division with over 15 years of experience.
+              Award-winning specialist leading our company while John is in Texas. With over 15 years of experience in R&D and product development.
             </p>
           </div>
 

@@ -205,6 +205,18 @@ function About() {
             </p>
           </div>
 
+          {/* Axel Yahm */}
+          <div className="team-card bg-white rounded-xl p-6 transition-all duration-300 hover:shadow-md text-center animate-fadeIn" style={{animationDelay: '0.55s'}}>
+            <div className="team-member-photo bg-gray-200 rounded-full w-36 h-36 md:w-48 md:h-48 mx-auto mb-6 flex items-center justify-center overflow-hidden">
+              <p className="text-gray-500">Photo</p>
+            </div>
+            <h3 className="team-member-name mb-2 text-xl md:text-2xl font-semibold">Axel Yahm</h3>
+            <p className="team-member-title text-blue-700 mb-3 font-medium">Chief Financial Officer</p>
+            <p className="team-member-bio text-gray-700">
+              Strategic financial leader overseeing the company's fiscal operations with expertise in growth management and sustainable business practices.
+            </p>
+          </div>
+
           {/* Connor Speigal */}
           <div className="team-card bg-white rounded-xl p-6 transition-all duration-300 hover:shadow-md text-center animate-fadeIn" style={{animationDelay: '0.6s'}}>
             <div className="team-member-photo bg-gray-200 rounded-full w-36 h-36 md:w-48 md:h-48 mx-auto mb-6 flex items-center justify-center overflow-hidden">

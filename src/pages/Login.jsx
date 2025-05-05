@@ -8,6 +8,8 @@ function Login() {
   const [isRegistering, setIsRegistering] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGoogleSubmitting, setIsGoogleSubmitting] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
   const { login, register, signInWithGoogle, currentUser, error } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,6 +24,12 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (isRegistering && !termsAccepted) {
+      alert("You must accept the Terms of Service to register");
+      return;
+    }
+    
     setIsSubmitting(true);
 
     let success;
@@ -114,10 +122,80 @@ function Login() {
             </div>
           </div>
 
+          {isRegistering && (
+            <div className="mt-4">
+              <div className="flex items-start">
+                <div className="flex items-center h-5">
+                  <input
+                    id="terms"
+                    name="terms"
+                    type="checkbox"
+                    checked={termsAccepted}
+                    onChange={() => setTermsAccepted(!termsAccepted)}
+                    className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
+                  />
+                </div>
+                <div className="ml-3 text-sm">
+                  <label htmlFor="terms" className="font-medium text-gray-700">
+                    I agree to the{" "}
+                    <button
+                      type="button"
+                      className="text-blue-600 hover:text-blue-500 underline"
+                      onClick={() => setShowTerms(!showTerms)}
+                    >
+                      Terms of Service
+                    </button>
+                  </label>
+                </div>
+              </div>
+              
+              {showTerms && (
+                <div className="mt-4 bg-gray-50 p-4 rounded-md border border-gray-200 max-h-60 overflow-y-auto text-xs text-gray-600">
+                  <h3 className="font-bold text-sm text-gray-800 mb-2">Terms of Service</h3>
+                  <p className="mb-2">Last updated: May 5, 2025</p>
+                  
+                  <p className="mb-2">Welcome to John Corp. Please read these Terms of Service ("Terms") carefully before registering for or using any services, products, applications, websites, or other offerings (collectively, the "Services") provided by John Corp ("Company," "we," "us," or "our"). By registering for or using the Services, you ("you," "your," or "User") agree to these Terms. If you do not agree, do not register or use the Services.</p>
+                  
+                  <hr className="my-3 border-gray-300" />
+                  
+                  <h4 className="font-semibold mb-1">1. Acceptance of Terms</h4>
+                  <p className="mb-2">By clicking "I Agree," completing the registration process, or otherwise accessing or using the Services, you confirm that you have read, understood, and agree to be bound by these Terms.</p>
+                  
+                  <h4 className="font-semibold mb-1">2. Definitions</h4>
+                  <ul className="list-disc pl-5 mb-2">
+                    <li>Company Employee: Any officer, director, employee, contractor, consultant, agent, or representative of the Company.</li>
+                    <li>Claim: Any claim, demand, suit, cause of action, loss, damage, liability, cost, or expense (including attorneys' fees).</li>
+                  </ul>
+                  
+                  <h4 className="font-semibold mb-1">3. Waiver of Claims Against Company Employees</h4>
+                  <p className="mb-1">3.1 No Suits or Punishment. By agreeing to these Terms, you expressly waive and release any and all Claims against any Company Employee for any actions taken in their capacity with respect to the Company or its Services. You further covenant not to initiate, assist, or participate in any lawsuit, arbitration, administrative proceeding, or other action against any Company Employee relating to the Company's business or Services.</p>
+                  <p className="mb-2">3.2 Scope. This waiver and covenant apply to all Claims, whether known or unknown, fixed or contingent, at law or in equity, arising now or in the future, including but not limited to tort, contract, statutory, and common-law Claims.</p>
+                  
+                  <h4 className="font-semibold mb-1">4. Governing Law and Dispute Resolution</h4>
+                  <p className="mb-2">These Terms are governed by the laws of California, without regard to conflict-of-law principles. Any dispute arising under or relating to these Terms shall be resolved exclusively by binding arbitration administered by the American Arbitration Association in San Francisco, California, under its rules then in effect. Each party waives any right to trial by jury.</p>
+                  
+                  <h4 className="font-semibold mb-1">5. Limitation of Liability</h4>
+                  <p className="mb-2">To the fullest extent permitted by law, neither the Company nor any Company Employee shall be liable for any indirect, incidental, special, consequential, or punitive damages arising from or related to your use of the Services. The total liability of the Company and its Employees shall not exceed the greater of (a) US $100 or (b) the total fees you paid in the six months preceding the claim.</p>
+                  
+                  <h4 className="font-semibold mb-1">6. Miscellaneous</h4>
+                  <ul className="list-disc pl-5 mb-2">
+                    <li>Severability. If any provision is unenforceable, the remainder shall remain in full force.</li>
+                    <li>Amendments. We may amend these Terms by posting updated Terms on our website; continued use constitutes acceptance.</li>
+                    <li>Entire Agreement. These Terms constitute the entire agreement between you and the Company regarding their subject matter.</li>
+                  </ul>
+                  
+                  <hr className="my-3 border-gray-300" />
+                  
+                  <p>By clicking "I Agree" or using the Services, you acknowledge that you have read and agree to these Terms, including the waiver and release of Claims against Company Employees in Section 3.</p>
+                </div>
+              )}
+            </div>
+          )}
+
           <div>
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || (isRegistering && !termsAccepted)}
               className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-300"
             >
               {isSubmitting ? (
@@ -150,9 +228,8 @@ function Login() {
 
             <div className="mt-4">
               <button
-                type="button"
-                onClick={handleGoogleSignIn}
-                disabled={isGoogleSubmitting}
+                type="button"              onClick={handleGoogleSignIn}
+              disabled={isGoogleSubmitting || (isRegistering && !termsAccepted)}
                 className="w-full flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-300"
               >
                 {isGoogleSubmitting ? (

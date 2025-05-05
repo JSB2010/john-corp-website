@@ -128,7 +128,7 @@ function About() {
 
         <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 rounded-r-lg">
           <p className="text-blue-700 font-medium">
-            <span className="font-bold">Leadership Update:</span> While our founder John Cunningham is on business in Texas, Jonha Wimer is serving as temporary CEO of John Corp.
+            <span className="font-bold">Leadership Update:</span> While our founder John Cunningham is on business in Texas, Jacob Barkin is serving as temporary CEO of John Corp.
           </p>
         </div>
 
@@ -145,27 +145,27 @@ function About() {
             </p>
           </div>
 
-          {/* Jacob Barkin */}
+          {/* Jonah Wimer */}
           <div className="team-card bg-white rounded-xl p-6 transition-all duration-300 hover:shadow-md text-center animate-fadeIn" style={{animationDelay: '0.1s'}}>
             <div className="team-member-photo bg-gray-200 rounded-full w-36 h-36 md:w-48 md:h-48 mx-auto mb-6 flex items-center justify-center overflow-hidden">
               <p className="text-gray-500">Photo</p>
             </div>
-            <h3 className="team-member-name mb-2 text-xl md:text-2xl font-semibold">Jacob Barkin</h3>
-            <p className="team-member-title text-blue-700 mb-3 font-medium">Chief Technology Officer</p>
+            <h3 className="team-member-name mb-2 text-xl md:text-2xl font-semibold">Jonah Wimer</h3>
+            <p className="team-member-title text-blue-700 mb-3 font-medium">Head Chemist</p>
             <p className="team-member-bio text-gray-700">
               Leading our research and development efforts for Jizz Tech and innovative new products.
             </p>
           </div>
 
-          {/* Jonha Wimer */}
+          {/* Jacob Barkin */}
           <div className="team-card bg-white rounded-xl p-6 transition-all duration-300 hover:shadow-md text-center animate-fadeIn" style={{animationDelay: '0.2s'}}>
             <div className="team-member-photo bg-gray-200 rounded-full w-36 h-36 md:w-48 md:h-48 mx-auto mb-6 flex items-center justify-center overflow-hidden">
               <p className="text-gray-500">Photo</p>
             </div>
-            <h3 className="team-member-name mb-2 text-xl md:text-2xl font-semibold">Jonha Wimer</h3>
-            <p className="team-member-title text-blue-700 mb-3 font-medium">Temporary CEO & Head Chemist</p>
+            <h3 className="team-member-name mb-2 text-xl md:text-2xl font-semibold">Jacob Barkin</h3>
+            <p className="team-member-title text-blue-700 mb-3 font-medium">Chief Technology Officer & Temporary CEO</p>
             <p className="team-member-bio text-gray-700">
-              Award-winning specialist leading our company while John is in Texas. With over 15 years of experience in R&D and product development.
+              Leading our company's technology initiatives and serving as interim CEO while John is in Texas. With extensive experience in both leadership and technical innovation.
             </p>
           </div>
 

@@ -16,6 +16,7 @@ import Payments from './pages/Payments'
 import Founder from './pages/Founder'
 import Login from './pages/Login'
 import Games from './pages/Games'
+import TestPage from './pages/TestPage'
 
 // Components
 import { Header } from './components/Header'
@@ -109,6 +110,9 @@ function App() {
                     <Filmmaking />
                   </PrivateRoute>
                 } />
+
+                {/* Test page for debugging */}
+                <Route path="/test" element={<TestPage />} />
 
                 <Route path="/about" element={
                   <PrivateRoute>

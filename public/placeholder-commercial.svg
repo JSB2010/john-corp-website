@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="640" height="360" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="360" fill="#0f172a"/>
+  <text x="320" y="180" font-family="Arial" font-size="24" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">John Corp Ad</text>
+  <g transform="translate(320, 220)">
+    <polygon points="0,-30 20,15 -20,15" fill="#ffffff" />
+    <circle cx="0" cy="0" r="40" stroke="#ffffff" stroke-width="4" fill="none" />
+  </g>
+</svg>

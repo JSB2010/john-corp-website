@@ -1,27 +1,24 @@
 import React from 'react';
-// Authentication imports commented out for now
-// import { Navigate } from 'react-router-dom';
-// import { useContext } from 'react';
-// import { AuthContext } from '../context/AuthContext';
+import { Navigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 function PrivateRoute({ children }) {
-  // TEMPORARILY BYPASS AUTHENTICATION FOR DEBUGGING
-  return children;
-  
-  // Original authentication logic (commented out for debugging)
-  /*
-  // Get current user and loading state from auth context
-  const { currentUser, loading } = useContext(AuthContext);
-  
-  // If still loading auth state, return nothing or a loading spinner
+  const { currentUser, loading } = useAuth();
+  const location = useLocation();
+
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
   }
-  
-  // If user is authenticated, render the children
-  // Otherwise, redirect to login page
-  return currentUser ? children : <Navigate to="/login" />;
-  */
+
+  if (!currentUser) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return children;
 }
 
 export default PrivateRoute;

@@ -6,7 +6,9 @@ import {
   signOut,
   onAuthStateChanged,
   googleProvider,
-  signInWithPopup
+  signInWithPopup,
+  setPersistence,
+  browserLocalPersistence
 } from '../firebase';
 
 const AuthContext = createContext();
@@ -17,6 +19,11 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  // Ensure auth state persists across page reloads
+  useEffect(() => {
+    setPersistence(auth, browserLocalPersistence).catch(() => {});
+  }, []);
 
   // Check for stored user on initial load
   useEffect(() => {

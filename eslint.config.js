@@ -3,13 +3,18 @@ import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 
+// Trim any whitespace from global variable names to avoid ESLint config errors
+const sanitizedBrowserGlobals = Object.fromEntries(
+  Object.entries(globals.browser).map(([key, value]) => [key.trim(), value])
+)
+
 export default [
   { ignores: ['dist'] },
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: sanitizedBrowserGlobals,
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },

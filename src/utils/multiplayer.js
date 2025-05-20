@@ -3,7 +3,7 @@
  * Handles local and online multiplayer functionality
  */
 
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, where, serverTimestamp } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, where, serverTimestamp, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 // Cache for active multiplayer sessions

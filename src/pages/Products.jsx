@@ -95,7 +95,7 @@ const features = [
   }
 ];
 
-function Products({ showNotification }) {
+function Products() {
   const { addToCart, cart } = useCart();
 
   // Add scroll reveal effect
@@ -125,12 +125,12 @@ function Products({ showNotification }) {
     const stockLimit = STOCK_LIMITS[product.id];
 
     if (currentQuantity >= stockLimit) {
-      showNotification(`Sorry, only ${stockLimit} units available`, 'error');
+      alert(`Sorry, only ${stockLimit} units available`);
       return;
     }
 
     addToCart(product);
-    showNotification(`${product.name} added to cart!`, 'success');
+    alert(`${product.name} added to cart!`);
   };
 
   return (
@@ -212,7 +212,7 @@ function Products({ showNotification }) {
           <div className="grid md:grid-cols-3 gap-6">
             {features.map((feature, index) => (
               <div
-                key={index}
+                key={feature.title}
                 className="card card-hover p-6 reveal"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
@@ -240,17 +240,17 @@ function Products({ showNotification }) {
             <div className="apple-divider"></div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 stagger">
-            {productData.map((product) => (
-              <div key={product.id} className="product-card animate-fadeIn">
-                <div className={`product-badge ${product.badgeColor}`}>{product.badge}</div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {productData.map((product, index) => (
+              <div key={product.id} className="product-card shadow-md rounded-xl overflow-hidden reveal" style={{ animationDelay: `${index * 0.1}s` }}>
+                <div className={`product-badge absolute top-4 right-4 px-3 py-1 rounded-full text-white text-sm font-medium ${product.badgeColor}`}>{product.badge}</div>
                 <div className="bg-gray-100 h-48 flex items-center justify-center">
                   <p className="text-gray-500 font-semibold">{product.name}</p>
                 </div>
-                <div className="product-content">
-                  <h3 className="product-title">{product.name}</h3>
-                  <p className="product-price">${product.price}</p>
-                  <p className="product-description">{product.description}</p>
+                <div className="product-content p-6">
+                  <h3 className="text-xl font-bold mb-2">{product.name}</h3>
+                  <p className="text-lg font-medium text-blue-600 mb-3">${product.price}</p>
+                  <p className="text-gray-600 mb-4">{product.description}</p>
                   <div className="flex justify-between items-center mb-4">
                     <p className="text-sm text-gray-500">
                       Stock: <span className="font-semibold">{STOCK_LIMITS[product.id]} units</span>
@@ -258,7 +258,7 @@ function Products({ showNotification }) {
                   </div>
                   <button
                     onClick={() => handleAddToCart(product)}
-                    className="btn btn-primary w-full hover-lift"
+                    className="btn btn-primary w-full py-3 rounded-lg hover-lift transition-all duration-300"
                   >
                     Add to Cart
                   </button>

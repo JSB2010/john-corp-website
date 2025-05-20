@@ -126,11 +126,7 @@ function About() {
       <div className="container py-12 md:py-16 px-4">
         <h2 className="section-title text-center mb-8 md:mb-12 text-3xl md:text-4xl font-bold tracking-tight">Our Leadership Team</h2>
 
-        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 rounded-r-lg">
-          <p className="text-blue-700 font-medium">
-            <span className="font-bold">Leadership Update:</span> While our founder John Cunningham is on business in Texas, Axel Yahn is serving as temporary CEO of John Corp.
-          </p>
-        </div>
+
 
         <div className="team-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
           {/* John Cunningham */}
@@ -139,9 +135,9 @@ function About() {
               <p className="text-gray-500">Photo</p>
             </div>
             <h3 className="team-member-name mb-2 text-xl md:text-2xl font-semibold">John Cunningham</h3>
-            <p className="team-member-title text-blue-700 mb-3 font-medium">Founder & Chairman</p>
+            <p className="team-member-title text-blue-700 mb-3 font-medium">Founder & CEO</p>
             <p className="team-member-bio text-gray-700">
-              Founder of John Corp, currently on business in Texas. Continuing the legacy of innovation and excellence.
+              Founder of John Corp, leading our company with vision and innovation since 1634.
             </p>
           </div>
 
@@ -163,9 +159,9 @@ function About() {
               <p className="text-gray-500">Photo</p>
             </div>
             <h3 className="team-member-name mb-2 text-xl md:text-2xl font-semibold">Jacob Barkin</h3>
-            <p className="team-member-title text-blue-700 mb-3 font-medium">Chief Technology Officer</p>
+            <p className="team-member-title text-blue-700 mb-3 font-medium">Chief Technology Officer & 2nd in Command</p>
             <p className="team-member-bio text-gray-700">
-              Leading our company's technology initiatives with extensive experience in both leadership and technical innovation.
+              Leading our company's technology initiatives and serving as second-in-command with extensive experience in both leadership and technical innovation.
             </p>
           </div>
 
@@ -211,9 +207,9 @@ function About() {
               <p className="text-gray-500">Photo</p>
             </div>
             <h3 className="team-member-name mb-2 text-xl md:text-2xl font-semibold">Axel Yahn</h3>
-            <p className="team-member-title text-blue-700 mb-3 font-medium">Chief Financial Officer & Temporary CEO</p>
+            <p className="team-member-title text-blue-700 mb-3 font-medium">Chief Financial Officer</p>
             <p className="team-member-bio text-gray-700">
-              Strategic financial leader overseeing the company's fiscal operations with expertise in growth management and sustainable business practices. Currently serving as interim CEO while John is in Texas.
+              Strategic financial leader overseeing the company's fiscal operations with expertise in growth management and sustainable business practices.
             </p>
           </div>
 

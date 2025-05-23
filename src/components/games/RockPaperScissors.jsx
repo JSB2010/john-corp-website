@@ -57,7 +57,7 @@ function RockPaperScissors() {
           <p className="text-lg">You chose: {playerChoice}</p>
           <p className="text-lg">Computer chose: {computerChoice}</p>
           <p className="text-xl font-bold mt-2">
-            {result === 'draw' ? "It's a draw!" : result === 'win' ? 'You win!' : 'You lose!'}
+            {getResultMessage(result)}
           </p>
         </div>
       )}

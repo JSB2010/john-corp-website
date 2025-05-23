@@ -7,6 +7,7 @@ import Minesweeper from '../components/games/Minesweeper';
 import Game2048 from '../components/games/Game2048';
 import Pong from '../components/games/Pong';
 import Breakout from '../components/games/Breakout';
+import RockPaperScissors from '../components/games/RockPaperScissors';
 import MultiplayerLobby from '../components/common/MultiplayerLobby';
 import ChallengeMode from '../components/common/ChallengeMode';
 import SocialShare from '../components/common/SocialShare';
@@ -23,7 +24,8 @@ function Games() {
     minesweeper: false,
     game2048: false,
     pong: false,
-    breakout: false
+    breakout: false,
+    rps: false
   });
 
   // New feature states
@@ -308,6 +310,36 @@ function Games() {
           )}
         </div>
       </div>
+
+      {/* Rock Paper Scissors */}
+      <div className="game-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <div className="bg-gray-200 h-48 rounded-lg mb-4 flex items-center justify-center relative">
+          <span className="text-4xl">RPS</span>
+          <div className="absolute bottom-2 right-2 bg-white bg-opacity-90 text-blue-600 px-2 py-1 rounded text-xs font-bold">
+            {premiumFeatures.rps ? 'PREMIUM' : 'FREE'}
+          </div>
+        </div>
+        <h3 className="text-xl font-bold mb-2">Rock Paper Scissors</h3>
+        <p className="text-gray-600 mb-4">
+          Choose rock, paper, or scissors and see if you can beat the computer.
+        </p>
+        <div className="flex space-x-2">
+          <button
+            onClick={() => handleGameSelect('rps')}
+            className="btn btn-primary py-2 px-4"
+          >
+            {premiumFeatures.rps ? 'Play Premium' : 'Play'}
+          </button>
+          {!premiumFeatures.rps && (
+            <button
+              onClick={() => openPremiumModal('rps')}
+              className="btn btn-outline border-black text-black py-2 px-4"
+            >
+              Get Premium
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   );
 
@@ -418,6 +450,21 @@ function Games() {
             <Pong isPremium={premiumFeatures.pong} />
           </div>
         );
+      case 'rps':
+        return (
+          <div className="game-container">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold">Rock Paper Scissors</h2>
+              <button
+                onClick={() => setActiveGame(null)}
+                className="btn btn-outline border-black text-black py-2 px-4"
+              >
+                Back to Games
+              </button>
+            </div>
+            <RockPaperScissors />
+          </div>
+        );
       case 'breakout':
         return (
           <div className="game-container">
@@ -449,7 +496,8 @@ function Games() {
       minesweeper: 'Minesweeper',
       game2048: '2048',
       pong: 'Pong',
-      breakout: 'Breakout'
+      breakout: 'Breakout',
+      rps: 'Rock Paper Scissors'
     };
 
     const gameColors = {
@@ -460,7 +508,8 @@ function Games() {
       minesweeper: 'from-gray-500 to-gray-700',
       game2048: 'from-orange-400 to-amber-600',
       pong: 'from-purple-500 to-blue-500',
-      breakout: 'from-blue-500 to-purple-500'
+      breakout: 'from-blue-500 to-purple-500',
+      rps: 'from-pink-500 to-red-500'
     };
 
     const premiumFeaturesList = {
@@ -511,6 +560,10 @@ function Games() {
         { title: 'Slower Ball Speed', description: 'Ball moves more slowly for an easier experience' },
         { title: 'Extra Lives', description: 'Start with 5 lives instead of 3' },
         { title: 'Power-ups', description: 'Collect special power-ups during gameplay' }
+      ],
+      rps: [
+        { title: 'Score Tracking', description: 'Keep track of wins, losses and draws' },
+        { title: 'Statistics', description: 'View your performance over multiple rounds' }
       ]
     };
 
@@ -643,7 +696,8 @@ function Games() {
       minesweeper: 'Minesweeper',
       game2048: '2048',
       pong: 'Pong',
-      breakout: 'Breakout'
+      breakout: 'Breakout',
+      rps: 'Rock Paper Scissors'
     };
 
     return gameNames[gameId] || gameId;
@@ -659,7 +713,8 @@ function Games() {
       minesweeper: ['classic', 'hexagonal', 'triangular'],
       game2048: ['classic', '3x3', '5x5'],
       pong: ['classic', 'multiplayer', 'challenge'],
-      breakout: ['classic', 'endless', 'puzzle']
+      breakout: ['classic', 'endless', 'puzzle'],
+      rps: ['classic']
     };
 
     return gameModes[gameId] || ['classic'];
